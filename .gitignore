@@ -1,0 +1,3 @@
+.idea/
+www/photos_compressed/*
+!www/photos_compressed/info.txt
