@@ -23,7 +23,7 @@ if (!empty($_POST)) {
         // image source
         $image_source_path = $path;
         // indique la cible
-        $image_target_path = RELATIVE_PATH.'photos_compressed/' . $fileName . "." . $ext;
+        $image_target_path = 'photos_compressed/' . $fileName . "." . $ext;
 
         // Redimensionne l'image
         $image = imagecreatefromstring(file_get_contents($image_source_path));
@@ -49,17 +49,15 @@ if (!empty($_POST)) {
     } elseif ($_POST['action'] === 'downloadFiles') {
         $imageNames = json_decode($_POST['images']);
         $zip = new ZipArchive;
-        $fileName = RELATIVE_PATH.'photos_compressed/'.generateRandomString(32).'.zip';
+        $fileName = 'photos_compressed/'.generateRandomString(32).'.zip';
         $zip->open($fileName, ZipArchive::CREATE);
         $quantity = count($imageNames);
-        //TODO sauvegarde db
-
         foreach ($imageNames as $imageName) {
-            if(file_exists(RELATIVE_PATH.'photos_compressed/' . $imageName)) {
-                $download_file = file_get_contents(RELATIVE_PATH.'photos_compressed/' . $imageName);
+            if(file_exists('photos_compressed/' . $imageName)) {
+                $download_file = file_get_contents('photos_compressed/' . $imageName);
                 #add it to the zip
                 $zip->addFromString($imageName, $download_file);
-                unlink(RELATIVE_PATH.'photos_compressed/' . $imageName);
+                unlink('photos_compressed/' . $imageName);
             }
         }
         $zip->close();

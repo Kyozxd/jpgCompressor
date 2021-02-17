@@ -145,6 +145,7 @@ function downloadZipFile() {
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.onload = (data) => {
         let name = JSON.parse(data.target.response);
+        console.log(name)
         downloadFile(name.split('/')[1], name);
     };
     xhr.send('action=downloadFiles&maxSize=' + MAX_SIZE + '&quality=' + QUALITY + '&sizeBefore=' + SIZE_BEFORE + '&images=' + JSON.stringify(IMAGES));
