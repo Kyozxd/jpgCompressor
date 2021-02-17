@@ -1,9 +1,9 @@
 <?php
 
 define("ABSOLUTE_PATH", __DIR__);
-define("RELATIVE_PATH",ABSOLUTE_PATH.'/');
-header('Content-type: application/json');
+define("RELATIVE_PATH", ABSOLUTE_PATH . '/');
 include RELATIVE_PATH . 'CompressionModel.php';
+header('Content-type: application/json');
 
 if (!empty($_POST)) {
     if ($_POST['action'] === 'compress') {
@@ -23,7 +23,7 @@ if (!empty($_POST)) {
         // image source
         $image_source_path = $path;
         // indique la cible
-        $image_target_path = 'photos_compressed/' . $fileName . "." . $ext;
+        $image_target_path = RELATIVE_PATH . 'photos_compressed/' . $fileName . "." . $ext;
 
         // Redimensionne l'image
         $image = imagecreatefromstring(file_get_contents($image_source_path));
@@ -47,27 +47,41 @@ if (!empty($_POST)) {
         echo json_encode($imageName);
         exit();
     } elseif ($_POST['action'] === 'downloadFiles') {
+        $oldFiles = array_diff(scandir(RELATIVE_PATH . 'photos_compressed'), array('.', '..'));
         $imageNames = json_decode($_POST['images']);
-        $zip = new ZipArchive;
-        $fileName = 'photos_compressed/'.generateRandomString(32).'.zip';
-        $zip->open($fileName, ZipArchive::CREATE);
         $quantity = count($imageNames);
-        foreach ($imageNames as $imageName) {
-            if(file_exists('photos_compressed/' . $imageName)) {
-                $download_file = file_get_contents('photos_compressed/' . $imageName);
-                #add it to the zip
-                $zip->addFromString($imageName, $download_file);
-                unlink('photos_compressed/' . $imageName);
+        // Remove old files if up to 50
+        if(count($oldFiles)>50) {
+            foreach ($oldFiles as $oldFile) {
+                if (!in_array($oldFile, $imageNames) && $oldFile !== 'info.txt') {
+                    unlink(RELATIVE_PATH . 'photos_compressed/' . $oldFile);
+                }
             }
         }
-        $zip->close();
-        $Compression = new CompressionModel;
-        $Compression->saveStat($quantity, floor($_POST['sizeBefore']/1024), floor(filesize($fileName)/1024), $_POST['quality'],$_POST['maxSize']);
+        if($quantity === 1 ){
+            $fileName = 'photos_compressed/'. $imageNames[0];
+        }else {
+            $zip = new ZipArchive;
+            $fileName = 'photos_compressed/' . generateRandomString(32) . '.zip';
+            $zip->open($fileName, ZipArchive::CREATE);
+            foreach ($imageNames as $imageName) {
+                if (file_exists(RELATIVE_PATH . 'photos_compressed/' . $imageName)) {
+                    $download_file = file_get_contents('photos_compressed/' . $imageName);
+                    #add it to the zip
+                    $zip->addFromString($imageName, $download_file);
+                    unlink(RELATIVE_PATH . 'photos_compressed/' . $imageName);
+                }
+            }
+            $zip->close();
+            $Compression = new CompressionModel;
+            $Compression->saveStat($quantity, floor($_POST['sizeBefore'] / 1024), floor(filesize($fileName) / 1024), $_POST['quality'], $_POST['maxSize']);
+        }
         echo json_encode($fileName);
         exit();
     }
 }
 
-function generateRandomString($length = 10) {
-    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+function generateRandomString($length = 10)
+{
+    return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))), 1, $length);
 }
