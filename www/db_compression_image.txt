@@ -1,0 +1,24 @@
+--
+-- Base de données :  `compression_image`
+--
+
+-- --------------------------------------------------------
+
+CREATE TABLE `compression` (
+  `id` int(11) NOT NULL,
+  `address` varchar(20) NOT NULL,
+  `quantity` int(4) NOT NULL,
+  `size_before_kb` int(8) NOT NULL,
+  `size_after_kb` int(8) NOT NULL,
+  `quality_option` int(4) NOT NULL,
+  `size_option` int(11) DEFAULT NULL,
+  `date` datetime NOT NULL
+);
+
+
+ALTER TABLE `compression`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `compression`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+

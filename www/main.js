@@ -5,7 +5,7 @@
  */
 let IMAGES = []; // input files
 let NUMBER = 0; // number of images
-let MAX_SIZE = 1000; // max size in pixels options
+let MAX_SIZE = 1920; // max size in pixels options
 let QUALITY = 100; // quality option
 let SIZE_BEFORE = 0; // sum of all image size in kb
 
@@ -145,7 +145,6 @@ function downloadZipFile() {
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.onload = (data) => {
         let name = JSON.parse(data.target.response);
-        console.log(name)
         downloadFile(name.split('/')[1], name);
     };
     xhr.send('action=downloadFiles&maxSize=' + MAX_SIZE + '&quality=' + QUALITY + '&sizeBefore=' + SIZE_BEFORE + '&images=' + JSON.stringify(IMAGES));
