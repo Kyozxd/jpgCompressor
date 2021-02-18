@@ -8,6 +8,8 @@ let NUMBER = 0; // number of images
 let MAX_SIZE = 1920; // max size in pixels options
 let QUALITY = 100; // quality option
 let SIZE_BEFORE = 0; // sum of all image size in kb
+let COEF_PIXELS_SIZE = [0.02, 0.04, 0.07, 0.1, 0.14, 0.35, 0.45, 0.5, 0.55, 0.65, 0.68]; // to estimate size after compression
+let COEF_QUALITY = [0, 10, 30, 60, 70, 90, 96, 97, 98, 99, 100]; // to convert quality value to % for algo
 
 /**
  *
@@ -21,7 +23,6 @@ function compressOneImage(imageElement) {
         formData.append('action', 'compress');
         formData.append('maxSize', MAX_SIZE);
         formData.append('quality', QUALITY);
-        SIZE_BEFORE += imageElement.size;
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'controller.php');
         xhr.onload = () => {
@@ -41,7 +42,7 @@ function compress() {
         MAX_SIZE = 'existing';
     }
     // Echelle de compression en %
-    QUALITY = [0, 10, 30, 60, 70, 90, 96, 97, 98, 99, 100][document.getElementById('quality').value];
+    QUALITY = COEF_QUALITY[document.getElementById('quality').value];
     let loadingElement = document.getElementById('greenBar');
     let loadingTextElement = document.querySelector('#loading_div span');
     let imageElements = document.getElementById('files_multiple').files;
@@ -103,8 +104,10 @@ function getListOfPhotos() {
         liElement.dataset.line = '' + line;
         ulElement.appendChild(liElement);
         IMAGES.push(imageElement.name);
+        SIZE_BEFORE += imageElement.size;
         line++;
     }
+    refreshCompressionCalculation();
     document.getElementById('loading').classList.remove('hidden');
 }
 
@@ -122,10 +125,12 @@ function toggleSizeInput() {
 }
 
 function refreshList() {
+    NUMBER = 0;
     let ulElement = document.getElementById('fileList_ul')
     ulElement.innerHTML = '<li>Aucun fichier sélectionné</li>';
     document.getElementById('greenBar').style.left = '-300px';
     document.getElementById('errorMessage').classList.add('hidden');
+    document.getElementById('summary').classList.add('hidden');
 }
 
 function emptyFileInput() {
@@ -133,6 +138,18 @@ function emptyFileInput() {
     IMAGES = [];
     SIZE_BEFORE = 0;
     refreshList();
+}
+
+function refreshCompressionCalculation(){
+    if(NUMBER>0) {
+        MAX_SIZE = document.getElementById('maxSize').value;
+        let sizeBefore = Math.ceil(SIZE_BEFORE / 1024);
+        let sizeAfter = Math.ceil(NUMBER * MAX_SIZE * MAX_SIZE * 0.75 / 1024 * COEF_PIXELS_SIZE[document.getElementById('quality').value]); // Format 4:3
+        document.getElementById('size_before').textContent = sizeBefore < 1024 ? sizeBefore + ' ko' : (sizeBefore / 1024).toFixed(2) + ' Mo';
+        document.getElementById('zip_size').textContent = sizeAfter < 1024 ? sizeAfter + ' ko' : (sizeAfter / 1024).toFixed(2) + ' Mo';
+        document.getElementById('pourcentage_compression').textContent = ((1 - sizeAfter / sizeBefore) * 100).toFixed(2) + ' % en moins';
+        document.getElementById('summary').classList.remove('hidden');
+    }
 }
 
 /**
