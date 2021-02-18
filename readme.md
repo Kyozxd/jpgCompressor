@@ -20,3 +20,6 @@ Then all files are deleted on the server
 
 ### Create first a new table in DB
 instructions on : ***db_compression_image.txt*** 
+
+### Use it online !
+https://www.twest.fr/compression_jpg/

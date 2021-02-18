@@ -2,51 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Compression images</title>
+    <meta name="Description" content="Compression d'image en ligne gratuit sans abonnement. Objectif : chargement de site internet plus rapide, archivage de documents, envoi de photos par mail et partage de photos légères">
+    <title>JPG Compressor</title>
     <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-<div>
-    <h1>Compression de photos</h1>
-</div>
-<div>
-    <label for="maxSize">Largeur ou hauteur max en pixel</label>
-    <input type="number" id="maxSize" value="1920" onchange="refreshCompressionCalculation()">
-    <p class="ml_30">ou</p>
-    <input type="checkbox" id="existingSize" onchange="toggleSizeInput()">
-    <label for="existingSize">Conserver les dimensions existantes</label>
-</div>
-<div>
-    <p class="inline">Qualité de l'image</p>
-    <input id="quality" class="range" type="range" min="0" max="10" step="1" value="10"
-           oninput="document.getElementById('quality_label').textContent = this.value + '/10'"
-           onchange="refreshCompressionCalculation()">
-    <label id="quality_label" for="quality" class="rangeLabel">10/10</label>
-</div>
-<div>
-    <label for="files_multiple">Photos à compresser : </label>
-    <input type="file" id="files_multiple" name="files" multiple onchange="getListOfPhotos()"><br><br>
-    <button onclick="emptyFileInput()">Rafraichir liste</button>
-</div>
-<div>
-    <ul id="fileList_ul">
-        <li>Aucun fichier sélectionné</li>
-    </ul>
-    <div id="summary" class="hidden">
-        <p>Taille des photos avant : <span id="size_before"></span></p>
-        <p>Taille estimée après compression : <span id="zip_size"></span> (<span id="pourcentage_compression"></span>)</p>
+<form>
+    <div>
+        <h1>JPG Compressor</h1>
+        <h2>Compression d'images en ligne gratuit</h2>
     </div>
-</div>
-<div id="loading_div">
-    <div id="loading" class="hidden">
-        <div id="greenBar"></div>
+    <div>
+        <label for="maxSize">Largeur ou hauteur max en pixel</label>
+        <input type="number" id="maxSize" value="1920" min="2" step="1" onchange="refreshCompressionCalculation()">
+        <p class="ml_30">ou</p>
+        <input type="checkbox" id="existingSize" onchange="toggleSizeInput()">
+        <label for="existingSize">Conserver les dimensions existantes</label>
     </div>
-    <span></span>
-</div>
-<div>
-    <button onclick="compress()">Compresser</button>
-</div>
-<div id="errorMessage" class="hidden"></div>
+    <div>
+        <p class="inline">Qualité de l'image</p>
+        <input id="quality" class="range" type="range" min="0" max="10" step="1" value="8"
+               oninput="document.getElementById('quality_label').textContent = this.value + '/10'"
+               onchange="refreshCompressionCalculation()">
+        <label id="quality_label" for="quality" class="rangeLabel">8/10</label>
+    </div>
+    <div>
+        <label for="files_multiple">Photos à compresser : </label>
+        <input type="file" id="files_multiple" name="files" multiple onchange="getListOfPhotos()"><br><br>
+        <button onclick="emptyFileInput()">Vider liste</button>
+    </div>
+    <div>
+        <ul id="fileList_ul">
+            <li>Aucun fichier sélectionné</li>
+        </ul>
+        <div id="summary" class="hidden">
+            <p>Taille actuelle des photos : <span id="size_before"></span></p>
+            <p>Taille estimée après compression : <span id="zip_size"></span> (<span
+                    id="pourcentage_compression"></span>)</p>
+        </div>
+    </div>
+    <div id="loading_div">
+        <div id="loading" class="hidden">
+            <div id="greenBar"></div>
+        </div>
+        <span></span>
+    </div>
+    <div>
+        <button id="compress_button" onclick="compress()">Compresser</button>
+    </div>
+    <div id="errorMessage" class="hidden"></div>
+</form>
 <script src="main.js"></script>
 </body>
+<footer><a href="https://github.com/TanguyWYK/jpgCompression">Code source github</a></footer>
 </html>
