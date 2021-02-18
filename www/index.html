@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="Description" content="Compression d'image en ligne gratuit sans abonnement. Objectif : chargement de site internet plus rapide, archivage de documents, envoi de photos par mail et partage de photos légères">
-    <title>JPG Compressor</title>
     <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="shortcut icon" href="image/favicon-32x32.png">
+    <title>JPG Compressor</title>
 </head>
 <body>
 <form>
@@ -41,18 +42,19 @@
                     id="pourcentage_compression"></span>)</p>
         </div>
     </div>
-    <div id="loading_div">
-        <div id="loading" class="hidden">
+    <div id="loading_div" class="hidden">
+        <div id="loading" >
             <div id="greenBar"></div>
         </div>
         <span></span>
     </div>
     <div>
         <button id="compress_button" onclick="compress()">Compresser</button>
+        <span id="waiting" class="hidden animate_fading">Veuillez patienter</span>
     </div>
     <div id="errorMessage" class="hidden"></div>
 </form>
 <script src="main.js"></script>
 </body>
-<footer><a href="https://github.com/TanguyWYK/jpgCompression">Code source github</a></footer>
+<footer><a href="https://github.com/TanguyWYK/jpgCompression">Code source on github</a></footer>
 </html>

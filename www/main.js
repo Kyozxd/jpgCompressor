@@ -44,7 +44,8 @@ function compress() {
     MAX_SIZE = document.getElementById('maxSize').value;
     if (MAX_SIZE === '') {
         MAX_SIZE = 'existing';
-    } else if (MAX_SIZE > 1) {
+    }
+    if (MAX_SIZE > 1 || MAX_SIZE === 'existing') {
         // Echelle de compression en %
         QUALITY = COEF_QUALITY[document.getElementById('quality').value];
         let loadingElement = document.getElementById('greenBar');
@@ -54,7 +55,8 @@ function compress() {
             showErrorMessage('Aucune photo sélectionnée');
         } else if (imageElements.length > 100) {
             showErrorMessage('Le nombre de photos maximum est de 100');
-        } else {
+        } else if (document.getElementById('errorMessage').classList.contains('hidden')) {
+            document.getElementById('waiting').classList.remove('hidden');
             compressRecursively(0, loadingElement, loadingTextElement, imageElements);
         }
     }
@@ -89,42 +91,58 @@ function compressRecursively(i, loadingElement, loadingTextElement, imageElement
     } else {
         downloadZipFile();
         document.getElementById('compress_button').disabled = false;
+        document.getElementById('waiting').classList.add('hidden');
     }
+}
+
+/**
+ * Check if files have a good extension name
+ *
+ * @param {[Blob]}imageElements
+ * @return {Set<string>}
+ */
+function checkFormatFile(imageElements) {
+    let errorFormat = new Set();
+    for (let imageElement of imageElements) {
+        let extension = imageElement.name.split('.');
+        extension = extension[extension.length - 1].toLowerCase();
+        if (!['jpeg', 'jpg', 'bmp', 'png', 'gif'].includes(extension)) {
+            errorFormat.add(extension);
+        }
+    }
+    return errorFormat;
 }
 
 /**
  * Read HTML input and display file list
  *
  */
-function getListOfPhotos(imagesDropped = []) {
+function getListOfPhotos() {
     refreshList();
-    console.log(imagesDropped);
-    console.log(imagesDropped[0]);
-    [...imagesDropped].forEach((file) => {
-        console.log(file.getData('text/plain'))
-        /*let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = function() {
-            console.log(reader.result);
-        }*/
-    })
     let imageElements = document.getElementById('files_multiple').files;
-    NUMBER = imageElements.length
-    document.querySelector('#loading_div span').textContent = 0 + '/' + NUMBER;
-    let ulElement = document.getElementById('fileList_ul');
-    ulElement.innerHTML = '';
-    let line = 0;
-    for (let imageElement of imageElements) {
-        let liElement = document.createElement('li');
-        liElement.textContent = '' + imageElement.name;
-        liElement.dataset.line = '' + line;
-        ulElement.appendChild(liElement);
-        IMAGES.push(imageElement.name);
-        SIZE_BEFORE += imageElement.size;
-        line++;
+    let errorFormat = checkFormatFile(imageElements);
+    if (errorFormat.size === 0) {
+        NUMBER = imageElements.length
+        document.querySelector('#loading_div span').textContent = 0 + '/' + NUMBER;
+        let ulElement = document.getElementById('fileList_ul');
+        ulElement.innerHTML = '';
+        let line = 0;
+        for (let imageElement of imageElements) {
+            let liElement = document.createElement('li');
+            liElement.textContent = '' + imageElement.name;
+            liElement.dataset.line = '' + line;
+            ulElement.appendChild(liElement);
+            IMAGES.push(imageElement.name);
+            SIZE_BEFORE += imageElement.size;
+            line++;
+        }
+        refreshCompressionCalculation();
+        document.getElementById('loading_div').classList.remove('hidden');
+    } else {
+        let errorMessage = 'Les formats suivants ne sont pas acceptés : ';
+        errorFormat.forEach(format => errorMessage += format + ' / ');
+        showErrorMessage(errorMessage.slice(0, -3));
     }
-    refreshCompressionCalculation();
-    document.getElementById('loading').classList.remove('hidden');
 }
 
 /**
@@ -148,7 +166,9 @@ function refreshList() {
     document.getElementById('greenBar').style.left = '-300px';
     document.getElementById('errorMessage').classList.add('hidden');
     document.getElementById('summary').classList.add('hidden');
-    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('loading_div').classList.add('hidden');
+    document.getElementById('compress_button').disabled = false;
+    document.getElementById('waiting').classList.add('hidden');
 }
 
 function emptyFileInput() {
