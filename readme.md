@@ -22,4 +22,4 @@ Then all files are deleted on the server
 instructions on : ***db_compression_image.txt*** 
 
 ### Use it online !
-https://www.twest.fr/compression_jpg/
+https://www.twest.fr/jpgCompressor/
