@@ -40,12 +40,11 @@ function compress() {
     document.querySelector('form').addEventListener('submit', (event) => {
         event.preventDefault()
     }, false);
-    document.getElementById('compress_button').disabled = true;
     MAX_SIZE = document.getElementById('maxSize').value;
     if (MAX_SIZE === '') {
         MAX_SIZE = 'existing';
     }
-    if (MAX_SIZE > 1 || MAX_SIZE === 'existing') {
+    if (MAX_SIZE > 1 && MAX_SIZE < 3e5 || MAX_SIZE === 'existing') {
         // Echelle de compression en %
         QUALITY = COEF_QUALITY[document.getElementById('quality').value];
         let loadingElement = document.getElementById('greenBar');
@@ -56,9 +55,12 @@ function compress() {
         } else if (imageElements.length > 100) {
             showErrorMessage('Le nombre de photos maximum est de 100');
         } else if (document.getElementById('errorMessage').classList.contains('hidden')) {
+            document.getElementById('compress_button').disabled = true;
             document.getElementById('waiting').classList.remove('hidden');
             compressRecursively(0, loadingElement, loadingTextElement, imageElements);
         }
+    } else {
+        showErrorMessage("La taille de l'image est erronée")
     }
 }
 
@@ -70,6 +72,8 @@ function showErrorMessage(message) {
     let errorElement = document.getElementById('errorMessage');
     errorElement.textContent = message;
     errorElement.classList.remove('hidden');
+    errorElement.classList.add('fadeIn');
+    setTimeout(() => errorElement.classList.remove('fadeIn'), 800);
 }
 
 /**

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="Description" content="Compression d'image en ligne gratuit sans abonnement. Objectif : chargement de site internet plus rapide, archivage de documents, envoi de photos par mail et partage de photos légères">
     <link rel="stylesheet" type="text/css" href="style.css"/>
-    <link rel="shortcut icon" href="image/favicon-32x32.png">
+    <link rel="shortcut icon" href="images/favicon-32x32.png">
     <title>JPG Compressor</title>
 </head>
-<body>
+<body id="useCustomCursor" onmouseenter="initCursor()" onmouseleave="hideCustomCursor()">
 <form>
     <div>
         <h1>JPG Compressor</h1>
@@ -15,7 +15,7 @@
     </div>
     <div>
         <label for="maxSize">Largeur ou hauteur max en pixel</label>
-        <input type="number" id="maxSize" value="1920" min="2" step="1" onchange="refreshCompressionCalculation()">
+        <input type="text" id="maxSize" value="1920" onchange="refreshCompressionCalculation()">
         <p class="ml_30">ou</p>
         <input type="checkbox" id="existingSize" onchange="toggleSizeInput()">
         <label for="existingSize">Conserver les dimensions existantes</label>
@@ -55,6 +55,7 @@
     <div id="errorMessage" class="hidden"></div>
 </form>
 <script src="main.js"></script>
+<script src="mouseCursor.js"></script>
 </body>
 <footer><a href="https://github.com/TanguyWYK/jpgCompression">Code source on github</a></footer>
 </html>

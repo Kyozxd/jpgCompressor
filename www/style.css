@@ -4,6 +4,9 @@ body {
     overflow-x: hidden;
     width: 100%;
     position: relative;
+    font-family: Medium, sans-serif;
+    color: #fff;
+    background-color: #000;
 }
 
 form {
@@ -46,7 +49,7 @@ ul {
 }
 
 #loading {
-    border: 1px solid #999;
+    border: #f0f;
     position: absolute;
     width: 300px;
     overflow: hidden;
@@ -59,7 +62,7 @@ ul {
 
 #greenBar {
     height: 30px;
-    background-color: #00bb00;
+    background-color: #0b0;
     position: relative;
     left: -300px;
     width: 300px;
@@ -71,13 +74,13 @@ ul {
 }
 
 #fileList_ul {
-    background-color: #ebeff1;
     border-radius: 3px;
+    border: solid 1px #f0f;
     padding: 20px;
 }
 
 #fileList_ul li {
-    color: #f6845e;
+    color: #fff;
     width: 18%;
     overflow: hidden;
     margin-left: 10px;
@@ -85,7 +88,7 @@ ul {
 }
 
 #fileList_ul .done {
-    color: #339933;
+    color: #393;
 }
 
 #fileList_ul {
@@ -98,19 +101,9 @@ ul {
     line-height: 30px;
     padding: 0 10px;
     margin-top: 20px;
-    background-color: #ffd7d7;
-    color: #86181d;
-    font-family: Helvetica, Arial, sans-serif;
+    background-color: #bc1717;
     border-radius: 5px;
     text-align: center;
-}
-
-input:hover, label:hover {
-    cursor: pointer;
-}
-
-input[disabled]:hover {
-    cursor: not-allowed;
 }
 
 #maxSize {
@@ -135,12 +128,21 @@ footer {
     margin-left: 20px;
 }
 
+button, input:hover, input,label:hover, a{
+    cursor: none;
+}
+
+label:hover{
+    color: #f0f;
+    transition: 0.3s;
+}
+
 .animate_fading {
     animation: waitingFading 2s linear infinite;
 }
 
-button:hover, button:hover{
-    cursor: pointer;
+.fadeIn{
+    animation: fadeIn 0.3s ease-in forwards;
 }
 
 @keyframes waitingFading {
@@ -153,4 +155,21 @@ button:hover, button:hover{
     100% {
         opacity: 1;
     }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    body{
+        font-size: 1.2rem;
+    }
+
+
 }
