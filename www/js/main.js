@@ -24,7 +24,7 @@ function compressOneImage(imageElement) {
         formData.append('maxSize', MAX_SIZE);
         formData.append('quality', QUALITY);
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller.php');
+        xhr.open('POST', 'app/controller.php');
         xhr.onload = () => {
             resolve();
         };
@@ -123,6 +123,8 @@ function checkFormatFile(imageElements) {
  */
 function getListOfPhotos() {
     refreshList();
+    // Refresh cursor after input files (focus loose)
+
     let imageElements = document.getElementById('files_multiple').files;
     let errorFormat = checkFormatFile(imageElements);
     if (errorFormat.size === 0) {
@@ -205,7 +207,7 @@ function refreshCompressionCalculation() {
  */
 function downloadZipFile() {
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'controller.php');
+    xhr.open('POST', 'app/controller.php');
     xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
     xhr.onload = (data) => {
         let name = JSON.parse(data.target.response);
@@ -227,4 +229,8 @@ function downloadFile(fileName, content) {
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+}
+
+function openExplorer(){
+    document.getElementById('files_multiple').click();
 }

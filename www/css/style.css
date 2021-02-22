@@ -1,12 +1,14 @@
 body {
     height: 95vh;
     padding: 0;
+    margin: 0;
     overflow-x: hidden;
     width: 100%;
     position: relative;
     font-family: Medium, sans-serif;
     color: #fff;
     background-color: #000;
+    user-select: none;
 }
 
 form {
@@ -73,6 +75,23 @@ ul {
     display: none;
 }
 
+.submitButton {
+    display: inline-block;
+    border: 1px solid #f0f;
+    color: #f0f;
+    width: initial;
+    margin: 5px;
+    padding: 0 5px;
+    height: 30px;
+    line-height: 30px;
+    background-color: transparent;
+    font-size: 1rem;
+}
+
+button.submitButton{
+    box-sizing: content-box;
+}
+
 #fileList_ul {
     border-radius: 3px;
     border: solid 1px #f0f;
@@ -95,6 +114,11 @@ ul {
     display: flex;
     justify-items: center;
     flex-wrap: wrap;
+}
+
+#files_multiple {
+    position: absolute;
+    left: -200px;
 }
 
 #errorMessage {
@@ -128,11 +152,11 @@ footer {
     margin-left: 20px;
 }
 
-button, input:hover, input,label:hover, a{
+button, input:hover, input, label:hover, a {
     cursor: none;
 }
 
-label:hover{
+label:hover {
     color: #f0f;
     transition: 0.3s;
 }
@@ -141,7 +165,7 @@ label:hover{
     animation: waitingFading 2s linear infinite;
 }
 
-.fadeIn{
+.fadeIn {
     animation: fadeIn 0.3s ease-in forwards;
 }
 
@@ -167,7 +191,7 @@ label:hover{
 }
 
 @media screen and (max-width: 680px) {
-    body{
+    body {
         font-size: 1.2rem;
     }
 

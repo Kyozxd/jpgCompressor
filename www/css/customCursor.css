@@ -1,0 +1,11 @@
+#useCustomCursor {
+    cursor: none;
+    position: relative;
+}
+
+#cursor_custom {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    pointer-events: none;
+}
