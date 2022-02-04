@@ -7,17 +7,21 @@ body {
     position: relative;
     font-family: Medium, sans-serif;
     color: #fff;
-    background-color: #000;
     user-select: none;
 }
 
-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+h1 {
     margin: auto;
-    max-width: 1200px;
+    text-align: center;
+    width: 50%;
+    padding: 10px;
+}
+
+h2 {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+    padding: 10px;
 }
 
 a {
@@ -30,8 +34,15 @@ a:hover {
 }
 
 div {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+    padding: 10px;
+}
+
+div {
     margin: 12px;
-    width: 80%;
+    width: 100%;
 }
 
 ul {
@@ -150,10 +161,6 @@ footer {
 
 #waiting {
     margin-left: 20px;
-}
-
-button, input:hover, input, label:hover, a {
-    cursor: none;
 }
 
 label:hover {

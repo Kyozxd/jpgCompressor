@@ -110,7 +110,7 @@ function checkFormatFile(imageElements) {
     for (let imageElement of imageElements) {
         let extension = imageElement.name.split('.');
         extension = extension[extension.length - 1].toLowerCase();
-        if (!['jpeg', 'jpg', 'bmp', 'png', 'gif'].includes(extension)) {
+        if (!['jpeg', 'jpg', 'bmp', 'png', 'gif', 'webp'].includes(extension)) {
             errorFormat.add(extension);
         }
     }

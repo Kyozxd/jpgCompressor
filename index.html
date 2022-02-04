@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="Description" content="Compression d'image en ligne gratuit sans abonnement. Objectif : chargement de site internet plus rapide, archivage de documents, envoi de photos par mail et partage de photos légères">
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="css/customCursor.css"/>
-    <link rel="shortcut icon" href="images/favicon-32x32.png">
-    <title>JPG Compressor</title>
+    <title>Kyozxd | Homepage</title>
+          
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- Meta data -->
+    <meta name="theme-color" content="#ff7070">
+    <meta content="assets/images/gif-profile-picture.gif" property="og:image" />
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.jpg">
+    <meta content="Web Compressor" property="og:title" />
+    
+    <meta content="Web compressor, compress video and image files sizes in half using this." property="og:description" />
+    <meta content="Web compressor, compress video and image files sizes in half using this." name="description" />
+    
+    <meta name="revisit-after" content="2 days">
+    <meta name="keywords" content="kyozxd, kyoz, webcompress, compress images, compreessor, compress video, image compressor, video compressor">
+    <meta property="og:locale" content="en_GB" />
+    <link rel="canonical" href="https://webcompress.net/" />
+    <meta property="og:url" content="https://webcompress.net/" />
+    <meta property="og:site_name" content="Web Compressor" />
+
+        <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
+    <link href="assets/css/modesta.css" type="text/css" rel="stylesheet">
+
+        <!-- JS -->
+
+
 </head>
-<body id="useCustomCursor" onmouseenter="initCursor()" onmouseleave="hideCustomCursor()">
-<form>
+<body class="dark-theme">
     <div>
-        <h1>JPG Compressor</h1>
-        <h2>Compression d'images en ligne gratuit</h2>
-    </div>
-    <div>
-        <label for="maxSize">Largeur ou hauteur max en pixel</label>
-        <input type="text" id="maxSize" value="1920" onchange="refreshCompressionCalculation()">
-        <p class="ml_30">ou</p>
-        <input type="checkbox" id="existingSize" onchange="toggleSizeInput()">
-        <label for="existingSize">Conserver les dimensions existantes</label>
+        <h1>Web Compressor</h1>
+        <h2>Compress images and videos!</h2>
     </div>
     <div>
         <p class="inline">Qualité de l'image</p>
@@ -55,9 +69,8 @@
         <span id="waiting" class="hidden animate_fading">Veuillez patienter</span>
     </div>
     <div id="errorMessage" class="hidden"></div>
-</form>
-<script src="js/main.js"></script>
-<script src="js/mouseCursor.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/mouseCursor.js"></script>
 </body>
 <footer><a href="https://github.com/TanguyWYK/jpgCompression">Code source on github</a></footer>
 </html>
